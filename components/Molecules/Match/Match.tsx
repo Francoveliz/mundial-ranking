@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Vs from "../../Atoms/Vs/Vs";
@@ -9,7 +9,11 @@ import { openWinnerComponent } from "../../../store/features/counter/counterSlic
 
 import Winner from "../Winner/Winner";
 
-const Match = ({ refetch }) => {
+interface Props {
+	refetch: any;
+}
+
+const Match: FunctionComponent<Props> = ({ refetch }) => {
 	const dispatch = useDispatch();
 	const [countryA, setCountryA] = useState(null);
 	const [countryB, setCountryB] = useState(null);

@@ -39,7 +39,6 @@ const Match: FunctionComponent<Props> = ({ refetch }) => {
 	}, [data]);
 
 	const setWinnerCountryA = () => {
-		console.log("country a id", countryA.id);
 		mutationElo.mutate({ winnerId: countryA.id, looserId: countryB.id });
 	};
 

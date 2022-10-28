@@ -15,7 +15,9 @@ const Index = () => {
 	);
 
 	const { isLoading, error, data, refetch } = useQuery(["repo"], () =>
-		fetch(`${process.env.API_URL}/api/countries`).then((res) => res.json())
+		fetch(`${process.env.NEXT_PUBLIC_API_URL}/countries`).then((res) =>
+			res.json()
+		)
 	);
 
 	useEffect(() => {

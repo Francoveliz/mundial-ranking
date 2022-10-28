@@ -68,14 +68,14 @@ const Match: FunctionComponent<Props> = ({ refetch }) => {
 	if (error) <h1> there was an error!</h1>;
 
 	return (
-		<div className="absolute w-screen h-screen max-h-screen max-h- bg-slate-100 ">
+		<div className="absolute top-0 left-0 w-screen h-screen max-h-screen bg-slate-100 ">
 			<div
 				className="flex flex-col items-center justify-center h-1/2"
 				onClick={selectTeamA}>
 				<p>{countryA?.name}</p>
 				<img src={countryA?.flag} className="w-56" alt="flag"></img>
 			</div>
-			<div className="absolute my-1 h-0.5 w-full bg-slate-900">
+			<div className="absolute my-1 h-0.5 w-full bg-slate-900  ">
 				<div className="absolute -translate-x-10 -top-10 left-1/2">
 					<Vs></Vs>
 				</div>

@@ -15,9 +15,7 @@ const Index = () => {
 	);
 
 	const { isLoading, error, data, refetch } = useQuery(["repo"], () =>
-		fetch(`${window.location.href}/api/countries`).then((res) =>
-			res.json()
-		)
+		fetch(`${process.env.API_URL}/api/countries`).then((res) => res.json())
 	);
 
 	useEffect(() => {

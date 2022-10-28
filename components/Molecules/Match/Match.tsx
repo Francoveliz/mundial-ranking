@@ -24,11 +24,11 @@ const Match: FunctionComponent<Props> = ({ refetch }) => {
 	);
 
 	const { isLoading, error, data } = useQuery(["countries"], () =>
-		fetch(`${window.location.href}/api/match`).then((res) => res.json())
+		fetch(`${process.env.API_URL}/api/match`).then((res) => res.json())
 	);
 
 	const mutationElo = useMutation((countriesIds) => {
-		return axios.post(`${window.location.href}/api/match`, countriesIds);
+		return axios.post(`${process.env.API_URL}/api/match`, countriesIds);
 	});
 
 	useEffect(() => {

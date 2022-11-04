@@ -8,6 +8,10 @@ import type { RootState } from "../../../store";
 import { openWinnerComponent } from "../../../store/features/counter/counterSlice";
 
 import Winner from "../Winner/Winner";
+import { Spinner } from "../../Atoms/Spinner/Spinner";
+import { MatchSection } from "../MatchSection/MatchSection";
+import { Country } from "../../../interfaces/country.interface";
+import { H3 } from "../../Atoms/H3/H3";
 
 interface Props {
 	refetch: any;
@@ -15,19 +19,24 @@ interface Props {
 
 const Match: FunctionComponent<Props> = ({ refetch }) => {
 	const dispatch = useDispatch();
-	const [countryA, setCountryA] = useState(null);
-	const [countryB, setCountryB] = useState(null);
-	const [winner, setWinner] = useState(null);
+	const [countryA, setCountryA] = useState<Country>();
+	const [countryB, setCountryB] = useState<Country>();
+	const [winner, setWinner] = useState<Country>();
 
 	const winnerIsOpen = useSelector(
 		(state: RootState) => state.counter.winnerIsOpen
 	);
 
-	const { isLoading, error, data } = useQuery(["countries"], () =>
-		fetch(`${process.env.NEXT_PUBLIC_API_URL}/match`).then((res) =>
-			res.json()
-		)
-	);
+	const { isLoading, error, data, isFetching, isFetched } = useQuery({
+		queryKey: ["countries"],
+		queryFn: () =>
+			fetch(`${process.env.NEXT_PUBLIC_API_URL}/match`).then((res) =>
+				res.json()
+			),
+		refetchIntervalInBackground: false,
+		refetchOnWindowFocus: false,
+		keepPreviousData: false,
+	});
 
 	const mutationElo = useMutation((countriesIds) => {
 		return axios.post(
@@ -68,23 +77,25 @@ const Match: FunctionComponent<Props> = ({ refetch }) => {
 	if (error) <h1> there was an error!</h1>;
 
 	return (
-		<div className="absolute top-0 left-0 w-screen h-screen max-h-screen bg-slate-100 ">
-			<div
-				className="flex flex-col items-center justify-center h-1/2"
-				onClick={selectTeamA}>
-				<p>{countryA?.name}</p>
-				<img src={countryA?.flag} className="w-56" alt="flag"></img>
-			</div>
-			<div className="absolute my-1 h-0.5 w-full bg-slate-900  ">
-				<div className="absolute -translate-x-10 -top-10 left-1/2">
-					<Vs></Vs>
+		<div className="absolute top-0 left-0 w-screen h-screen max-h-screen  flex items-center justify-center ">
+			<div className="w-[720px] h-screen border-2	 relative">
+				<MatchSection
+					selectTeam={selectTeamA}
+					isFetching={isFetching}
+					flag={countryA?.flag}
+					name={countryA?.name}
+				/>
+				<div className="absolute my-1 h-0.5 w-full bg-gray-200  ">
+					<div className="absolute -translate-x-10 -top-10 left-1/2">
+						<Vs></Vs>
+					</div>
 				</div>
-			</div>
-			<div
-				className="flex flex-col items-center justify-center h-1/2"
-				onClick={selectTeamB}>
-				<p>{countryB?.name}</p>
-				<img src={countryB?.flag} className="w-56" alt="flag"></img>
+				<MatchSection
+					selectTeam={selectTeamB}
+					isFetching={isFetching}
+					flag={countryB?.flag}
+					name={countryB?.name}
+				/>
 			</div>
 			{winnerIsOpen && (
 				<Winner refetch={refetch} country={winner}></Winner>

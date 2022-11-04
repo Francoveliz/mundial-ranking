@@ -10,9 +10,9 @@ interface Props {
 export const Leaderboard: FunctionComponent<Props> = ({ data }) => {
 	console.log({ data });
 	return (
-		<div className="w-full">
+		<div className="w-full md:w-[720px] bg-white ">
 			<div className="flex flex-col items-center ">
-				<div className="flex flex-col w-full gap-4 pb-20">
+				<div className="flex flex-col w-full gap-4 pb-24">
 					{data?.map((team: any, index: any) => (
 						<LeaderboardItem key={team.id} team={team} position={index} />
 					))}
